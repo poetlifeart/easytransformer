@@ -17,6 +17,7 @@ class ScaleDotProductAttention(nn.Module):
         if mask !=None :
             score=score.masked_fill(mask==0, -1e9)
 
+        score=self.softmax(score)
         v=score @ v
 
         return v, score
