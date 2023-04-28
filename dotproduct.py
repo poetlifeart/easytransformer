@@ -13,7 +13,6 @@ class ScaleDotProductAttention(nn.Module):
         k_t=k.transpose(2,3)
 
         score=(q @ k_t)/math.sqrt(d_tensor)
-
         if mask !=None :
             score=score.masked_fill(mask==0, -1e9)
 
