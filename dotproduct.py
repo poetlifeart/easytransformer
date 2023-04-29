@@ -1,32 +1,45 @@
-import math #
-import torch#
-import torch.nn as nn#
+import math 
+import torch
+import torch.nn as nn
+
 
 class ScaleDotProductAttention(nn.Module):#
-    def __init__(self):#
-        super().__init__()#
+    def __init__(self, d_tensor ):
+        super().__init__()
+        self.d_tensor=d_tensor#
 
-    def forward(self, k,q, v, mask=None):#
+    def forward(self, queries ,keys, values, mask=None):#
 
-        self.softmax=nn.Softmax(dim=-1)#
-        d_tensor=k.shape[-1]#
-        k_t=k.transpose(2,3)#
+        
+ 
+        keys_transpose=keys.transpose(2,3)#
 
-        score=(q @ k_t)/math.sqrt(d_tensor)#
+        attention=(queries @ keys_transpose)/self.d_tensor#
         if mask !=None :
-            score=score.masked_fill(mask==0, -1e9)#
+            attention=attention.masked_fill(mask==0, '-inf')#
 
-        score=self.softmax(score)#
-        v=score @ v#
+        attention=torch.softmax(attention, dim=-1)#
+        values=attention @ values#
 
-        return v, score#
+        return values, attention#
 
-k=torch.rand(2, 8, 3, 4)#
-q=torch.rand(2, 8, 3, 4)#
-v=torch.rand(2, 8, 3, 4)#
-test=ScaleDotProductAttention()#
-t, m=test(k,q,v)#
-print(t.shape)#
+if __name__ == "__main__":
+
+
+    batch_size = 2
+    heads = 3
+    timesteps = 8
+    feats = 4
+
+  
+
+    keys=torch.rand(batch_size, heads, timesteps, feats)#
+    quereis=torch.rand(batch_size, heads, timesteps, feats)#
+    values=torch.rand(batch_size, heads, timesteps, feats)#
+    d_tensor=keys.shape[-1]#
+    test=ScaleDotProductAttention(d_tensor)#
+    values, attention=test(quereis,keys,values)#
+    print(values.shape)#
 
 
 
