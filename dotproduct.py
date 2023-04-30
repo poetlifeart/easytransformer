@@ -16,6 +16,7 @@ class ScaleDotProductAttention(nn.Module):
         
 
     # The forward method accepts queries, keys, and values as inputs and returns the output of the attention mechanism
+    # Each tensor has the following dimensions: batch size, number of heads, number of timesteps, and dimension of the feature vector
     def forward(self, queries ,keys, values, mask=None):
 
         #by transposing the keys, we can compute the dot product between the queries and keys via matrix multiplication
