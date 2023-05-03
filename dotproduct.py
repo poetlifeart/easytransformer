@@ -6,7 +6,6 @@ import torch.nn as nn
 # as well as the attention weights. 
 
 class ScaleDotProductAttention(nn.Module):
-
    
     def __init__(self, d_tensor ):
         """
@@ -19,14 +18,15 @@ class ScaleDotProductAttention(nn.Module):
 
         # The square root of the dimension of the key feature vector is stored in the d_tensor attribute
         self.scale = math.sqrt(d_tensor)
-        
 
     # The forward method accepts queries, keys, and values as inputs and returns the output of the attention mechanism
-    # Each tensor has the following dimensions: batch size, number of heads, number of timesteps, and dimension of the feature vector
+    # Each tensor has the following dimensions: batch size, number of heads, number of timesteps, and dimension of 
+    # the feature vector
     def forward(self, queries ,keys, values, mask=None):
         """
         The forward method accepts queries, keys, and values as inputs and returns the output of the attention mechanism
-        Each tensor has the following dimensions: batch size, number of heads, number of timesteps, and dimension of the feature vector
+        Each tensor has the following dimensions: batch size, number of heads, number of timesteps, 
+        and dimension of the feature vector
 
         args:
             queries (torch.Tensor): a 4D tensor with dimensions batch size, number of heads, number of timesteps, 
@@ -50,15 +50,17 @@ class ScaleDotProductAttention(nn.Module):
             attention = attention.masked_fill(mask == 0, float('-inf'))
 
         # The softmax function is applied to the attention weights to obtain the output of the attention mechanism
-        # The output of the attention mechanism is multiplied by the values to obtain the final output of the attention mechanism
-        attention = torch.softmax(attention, dim=-1)
+        # The output of the attention mechanism is multiplied by the values to obtain 
+        # the final output of the attention mechanism
+        attention = torch.softmax(attention, dim = -1)
         values = attention @ values
         return values, attention
 
 # Testing the ScaleDotProductAttention class
 if __name__ == '__main__':
 
-    # The queries, keys, and values are 4D tensors with the following dimensions: batch size, number of heads, number of timesteps, and dimension features
+    # The queries, keys, and values are 4D tensors with the following dimensions: batch size, number of heads, 
+    # number of timesteps, and dimension features
     batch_size = 2
     heads = 3
     timesteps = 8
