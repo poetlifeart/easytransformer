@@ -5,7 +5,7 @@ import torch.nn as nn
 
 class ScaleDotProductAttention(nn.Module):
    
-    def __init__(self, d_tensor ):
+    def __init__(self, d_tensor):
         """
         The constructor accepts the dimension of the key and value vectors as input.
         This class accepts queries, keys, and values as inputs and returns the output of the attention mechanism
@@ -19,7 +19,7 @@ class ScaleDotProductAttention(nn.Module):
         # The square root of the dimension of the key feature vector is stored in the self.scale attribute
         self.scale = math.sqrt(d_tensor)
 
-    def forward(self, queries ,keys, values, mask=None):
+    def forward(self, queries, keys, values, mask=None):
         """
         The forward method accepts queries, keys, and values as inputs and returns the output of the attention mechanism
         Each tensor has the following dimensions: batch size, number of heads, number of timesteps, 
