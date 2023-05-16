@@ -35,7 +35,7 @@ class EncoderLayer(nn.Module):
 
 if __name__ == '__main__':
     encoder = EncoderLayer(10, 10, 5)
-    tensor = torch.rand(5, 10, 10)
+    tensor = torch.ones(5, 10, 10)
     tensor = encoder(tensor)
     print()
     print(tensor.shape)

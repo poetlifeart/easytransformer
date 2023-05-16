@@ -31,7 +31,8 @@ class PositionalEncoding(nn.Module):
 
         # we use register_buffer to store our positional encoding as a buffer so that it is not updated during 
         # training furthermore, this allows for the positional encoding to be moved to the GPU, if available with 
-        # the model parameters
+        # the model parameters.
+        
         self.register_buffer('encoding', encoding)
         
     def forward(self, x):
@@ -51,11 +52,13 @@ class PositionalEncoding(nn.Module):
 if __name__ == '__main__':
 
     # The constrcutor accepts the dimension of the feature vector of the word and 
-    # the maximum length of the sequence as input
+    # the maximum length of the sequence as input.
     position = PositionalEncoding(d_model=8, max_len=40)
+   
+    
 
     # The input to the positional encoding is a 2D tensor with 
-    # we are testing with batch size of 1 and sequence length of 20
+    # we are testing with batch size of 1 and sequence length of 20.
     x = torch.arange(0, 20, dtype=torch.float32)
     x = x.unsqueeze(dim=0)
     print(position.forward(x).shape)

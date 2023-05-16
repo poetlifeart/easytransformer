@@ -8,19 +8,19 @@ class MultiHeadAttention(nn.Module):
         super().__init__()
         self.n_head = n_head
         self.d_model = d_model
-        d_tensor = d_model // n_head
-        self.linear_keys = nn.Linear(d_tensor, d_tensor)
-        self.linear_queries = nn.Linear(d_tensor, d_tensor)
-        self.linear_values = nn.Linear(d_tensor, d_tensor)
+        self.linear_keys = nn.Linear(d_model, d_model)
+        self.linear_queries = nn.Linear(d_model, d_model)
+        self.linear_values = nn.Linear(d_model, d_model)
 
         self.mix_values = nn.Linear(d_model, d_model)
 
 
     def forward(self, keys, queries, values, mask=None):
-        keys, queries, values = self.split(keys), self.split(queries), self.split(values)
+        print(keys.shape, "keys")
         keys    = self.linear_keys(keys)
         queries = self.linear_queries(queries)
         values  = self.linear_values(values)
+        keys, queries, values = self.split(keys), self.split(queries), self.split(values)
 
 
         dot=ScaleDotProductAttention.ScaleDotProductAttention(self.d_model//self.n_head)
