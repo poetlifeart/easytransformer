@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import ScaleDotProductAttention
+import scale_dot_product_attention
 
 class MultiHeadAttention(nn.Module):
 
@@ -23,7 +23,7 @@ class MultiHeadAttention(nn.Module):
         keys, queries, values = self.split(keys), self.split(queries), self.split(values)
 
 
-        dot=ScaleDotProductAttention.ScaleDotProductAttention(self.d_model//self.n_head)
+        dot=scale_dot_product_attention.ScaleDotProductAttention(self.d_model//self.n_head)
         values, attention = dot(keys, queries, values)
         keys, queries, values = self.concat(keys), self.concat(queries), self.concat(values)
 

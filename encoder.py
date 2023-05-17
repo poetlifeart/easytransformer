@@ -1,7 +1,6 @@
 from torch import nn
 import torch
-
-from EncoderLayer import EncoderLayer
+from encoder_layer import EncoderLayer
 from transformer_embedding import TransformerEmbedding
 
 
@@ -34,7 +33,8 @@ class Encoder(nn.Module):
 
 if __name__ == '__main__':
     encoder = Encoder(10, 100, 100, 100, 5, 5, 0.1, 'gpu')
-    tensor = torch.ones(256, 100, dtype=torch.long)
+    #tensor = torch.ones(256, 100, dtype=torch.long)
+    tensor = torch.ones(128, 10, dtype=torch.long)
     tensor = encoder(tensor)
     
       
